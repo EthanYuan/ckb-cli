@@ -1,6 +1,6 @@
 use crate::utils::other::calculate_type_id;
 use ckb_chain_spec::consensus::TYPE_ID_CODE_HASH;
-use ckb_sdk::constants::ONE_CKB;
+use ckb_sdk::constants::ONE_BYTE_SHANNONS;
 use ckb_types::{
     bytes::Bytes,
     core::{Capacity, ScriptHashType},
@@ -137,7 +137,7 @@ impl ChangeInfo for CellChange {
             0
         };
         lock_script.occupied_capacity().expect("capacity").as_u64()
-            + (type_script_size + data_size + 8) * ONE_CKB
+            + (type_script_size + data_size + 8) * ONE_BYTE_SHANNONS
     }
 
     fn build_input(&self) -> Option<(packed::CellInput, u64)> {
@@ -326,7 +326,8 @@ impl ChangeInfo for DepGroupChange {
             StateChange::NewAdded { data, .. } => data,
         };
         let data_size = data.len() as u64;
-        lock_script.occupied_capacity().expect("capacity").as_u64() + (data_size + 8) * ONE_CKB
+        lock_script.occupied_capacity().expect("capacity").as_u64()
+            + (data_size + 8) * ONE_BYTE_SHANNONS
     }
 
     fn build_input(&self) -> Option<(packed::CellInput, u64)> {

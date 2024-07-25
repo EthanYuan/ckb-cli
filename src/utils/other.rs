@@ -10,7 +10,7 @@ use ckb_hash::{blake2b_256, new_blake2b};
 use ckb_jsonrpc_types as rpc_types;
 use ckb_jsonrpc_types::Status;
 use ckb_sdk::{
-    constants::{MIN_SECP_CELL_CAPACITY, ONE_CKB},
+    constants::{MIN_SECP_CELL_CAPACITY, ONE_BYTE_SHANNONS},
     traits::LiveCell,
     tx_builder::{BalanceTxCapacityError, TxBuilderError},
     util::serialize_signature,
@@ -255,7 +255,7 @@ pub fn check_capacity(capacity: u64, to_data_len: usize) -> Result<(), String> {
             MIN_SECP_CELL_CAPACITY
         ));
     }
-    if capacity < MIN_SECP_CELL_CAPACITY + (to_data_len as u64 * ONE_CKB) {
+    if capacity < MIN_SECP_CELL_CAPACITY + (to_data_len as u64 * ONE_BYTE_SHANNONS) {
         return Err(format!(
             "Capacity can not hold {} bytes of data",
             to_data_len
